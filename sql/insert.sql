@@ -1,5 +1,10 @@
 INSERT INTO users(username, email, password, created_at)
-VALUES ('admin', 'admin@aulab.it', '12345678', 20250401);
+VALUES (
+        'admin',
+        'admin@aulab.it',
+        '$2a$10$oMiUOq5ToRfUI/Zprg5nE.qt8nT9KKJZoDBu1SIWuj.UGx8aRHwxS',
+        20250401
+    );
 INSERT INTO roles(name)
 VALUES ('ROLE_ADMIN'),
     ('ROLE_REVISOR'),

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http//www.thymeleaf.org">
 
 <head th:insert="~{index :: head}"></head>
 
@@ -40,9 +40,9 @@
                                     <!-- <p th:if="${#fields.hasErrors('email')}" class="text-danger">
                                         <span th:text="${#fields.errors('email')}"></span>
                                     </p> -->
-                                </li>
 
-                                <li class="list-group-item">
+
+
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="password" name="password"
                                         placeholder="tua password...">
@@ -50,10 +50,13 @@
                                     <!-- <p th:if="${#fields.hasErrors('password')}" class="text-danger">
                                         <span th:text="${#fields.errors('password')}"></span>
                                     </p> -->
-                                </li>
-                                <li class="list-group-item">
-                                    <button type="submit" class="btn btn-primary">Accedi</button>
-                                    <span>Non sei registrato <a th:href="@{/register}">SingUp</a></span>
+
+                                    <div class="button-container d-flex col-12 align-items-baseline">
+                                        <button type="submit" class="btn btn-primary mt-2 me-3">Accedi</button>
+                                        <span>Non sei registrato <a th:href="@{/register}">SingUp</a></span>
+                                    </div>
+
+
                                 </li>
                             </form>
                         </ul>

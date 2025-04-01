@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDto {
     private Long id;
-    @NotEmpty(message = "Fristname can't be empty")
-    private String fristname;
-    @NotEmpty(message = "Lastname can't be empty")
-    private String lastname;
+    // @NotEmpty(message = "Fristname can't be empty")
+    private String firstName;
+    // @NotEmpty(message = "Lastname can't be empty")
+    private String lastName;
     @NotEmpty(message = "Email can't be empty")
     @Email
     private String email;

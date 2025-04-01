@@ -5,11 +5,14 @@ import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,7 +25,7 @@ public class User {
     private String username;
     @Column(name = "email", nullable = false,unique = true,length = 80)
     private String email;
-    @Column(name="password",nullable = false,length =30)
+    @Column(name="password",nullable = false,length =200)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -32,5 +35,7 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")  // Colonna che punta all'entità collegata (Role)
     )
     private List<Role> roles = new ArrayList<>();
+
+
 }
 
