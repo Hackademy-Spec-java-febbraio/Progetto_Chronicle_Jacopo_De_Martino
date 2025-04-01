@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:insert="~{index :: head}"></head>
+
+<body>
+    <div th:insert="~{index :: navbar}"></div>
+    <div th:rplace="~{index :: content}">
+        <div class="container  ">
+            <div class="row justify-content-center align-items-center min-vh-100">
+                <div class="col-md-8 col-lg-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-center fw-bold">Registrazione</h5>
+                            <p class="card-text text-center fw-bold">modulo di registrazione per la piattaforma</p>
+                            <div class="card-text text-center fw-bold" th:if="${param.success}">
+                                <div class="alert alert-success text-success">
+                                    registrazione effettutata con successo
+                                </div>
+                            </div>
+                            <div class="card-text text-center fw-bold" th:if="${param.error}">
+                                <div class="alert alert-danger text-danger">
+                                    registrazione non riuscita assicurati di aver compilato tutti i campi
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <form method="post" th:action="@{/register/save}" th:object="${user}">
+                                <li class="list-group-item">
+                                    <label for="firstName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="tuo nome..."
+                                        th:field="*{firstName}">
+
+                                    <!-- <p th:if="${#fields.hasErrors('firstName')}" class="text-danger">
+                                        <span th:text="${#fields.errors('firstName')}"></span>
+                                    </p> -->
+                                </li>
+
+                                <li class="list-group-item">
+                                    <label for="lastName" class="form-label">Surname</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="tuo cognome..."
+                                        th:field="*{lastName}">
+
+                                    <!-- <p th:if="${#fields.hasErrors('lastName')}" class="text-danger">
+                                        <span th:text="${#fields.errors('lastName')}"></span>
+                                    </p> -->
+                                </li>
+
+                                <li class="list-group-item">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="tua email..."
+                                        th:field="*{email}">
+
+                                    <!-- <p th:if="${#fields.hasErrors('email')}" class="text-danger">
+                                        <span th:text="${#fields.errors('email')}"></span>
+                                    </p> -->
+                                </li>
+
+                                <li class="list-group-item">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password"
+                                        placeholder="tua password..." th:field="*{password}">
+
+                                    <!-- <p th:if="${#fields.hasErrors('password')}" class="text-danger">
+                                        <span th:text="${#fields.errors('password')}"></span>
+                                    </p> -->
+                                </li>
+                                <li class="list-group-item">
+                                    <button type="submit" class="btn btn-primary">Conferma registazione</button>
+                                    <span>Hai gia un accaunt <a th:href="@{/login}">Login</a></span>
+                                </li>
+                            </form>
+                        </ul>
+                        <div class="card-body">
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:insert="~{index :: footer}"></div>
+
+    <!-- Corretto il tag di apertura e chiusura del script -->
+    <script th:insert="~{index :: bootstrapScript}"></script>
+</body>
+
+</html>

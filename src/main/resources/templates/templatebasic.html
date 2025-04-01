@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:insert="~{index :: head}"></head>
+
+<body>
+    <div th:insert="~{index :: navbar}"></div>
+    <div th:insert="~{index :: content}"></div>
+    <div th:insert="~{index :: footer}"></div>
+
+    <!-- Corretto il tag di apertura e chiusura del script -->
+    <script th:insert="~{index :: bootstrapScript}"></script>
+</body>
+
+</html>
