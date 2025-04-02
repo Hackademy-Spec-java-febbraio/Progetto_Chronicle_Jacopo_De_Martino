@@ -7,5 +7,7 @@ import it.aulab.aulabchronicle.models.Role;
 
 @Repository
 public interface RoleRepository  extends JpaRepository<Role,Long>{
+    Role findByNameIgnoreCase(String name);
 
+    Role findByName(String name);
 }
