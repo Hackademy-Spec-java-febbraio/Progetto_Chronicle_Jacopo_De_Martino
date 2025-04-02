@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS articles(
     title VARCHAR(100) NOT NULL,
     subtitle VARCHAR(100) NOT NULL,
     body TEXT NOT NULL,
-    publishDate DATE,
+    publish_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_id BIGINT,
     category_id BIGINT,
@@ -31,4 +31,10 @@ CREATE TABLE IF NOT EXISTS user_roles(
     PRIMARY KEY (user_id, role_id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+CREATE TABLE IF NOT EXISTS images(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    path VARCHAR(255) NOT NULL,
+    article_id BIGINT,
+    FOREIGN KEY (article_id) REFERENCES articles(id)
 );

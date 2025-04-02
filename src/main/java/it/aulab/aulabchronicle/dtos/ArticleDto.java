@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import it.aulab.aulabchronicle.models.Category;
 import it.aulab.aulabchronicle.models.User;
+import it.aulab.aulabchronicle.models.Image;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class ArticleDto {
     private LocalDate publishDate;
     private User user;
     private Category category;
+    private Image image;
     
 }

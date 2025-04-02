@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -42,7 +43,7 @@ public class Article {
     @Column(name = "body",nullable=false,length=1000)
     private String body;
 
-    @Column(name="publishDate",nullable=true,length=8)
+    @Column(name="publish_date",nullable=true,length=8)
     @NotNull
     private LocalDate publishDate;
 
@@ -55,6 +56,10 @@ public class Article {
     @JoinColumn(name="category_id")
     @JsonIgnoreProperties({"articles"})
     private Category category;
+
+    @OneToOne(mappedBy="article")
+    @JsonIgnoreProperties({"article"})
+    private Image image;
 
     
 }
