@@ -1,5 +1,6 @@
 package it.aulab.aulabchronicle;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,8 +14,13 @@ public class AulabchronicleApplication {
 		SpringApplication.run(AulabchronicleApplication.class, args);
 	}
 	
-@Bean
-public PasswordEncoder getPasswordEncoder() {
-	return new BCryptPasswordEncoder();
-}
+	@Bean
+	public PasswordEncoder getPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	@Bean
+	public ModelMapper instanceModelMapper(){
+		ModelMapper mapper = new ModelMapper();
+		return mapper;
+	}
 }
