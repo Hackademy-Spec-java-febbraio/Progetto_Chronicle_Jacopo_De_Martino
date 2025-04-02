@@ -44,16 +44,6 @@ public void saveUser(UserDto userDto, RedirectAttributes redirectAttributes, Htt
 
     // Verifica che il ruolo esista nel database
     Role role = roleRepository.findByName("ROLE_USER");
-
-    // if (role == null) {
-       
-    //     role = new Role();
-    //     role.setName("ROLE_USER");
-    //     roleRepository.save(role);  // Salva il nuovo ruolo nel database
-    //     System.out.println("Role 'ROLE_USER' was created and saved.");
-    // }
-
-    // Imposta il ruolo trovato o creato
     newUser.setRoles(List.of(role));
     userRepository.save(newUser);
 }

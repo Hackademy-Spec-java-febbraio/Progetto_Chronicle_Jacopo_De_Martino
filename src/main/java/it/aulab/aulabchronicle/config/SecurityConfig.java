@@ -53,8 +53,6 @@ public SecurityConfig(CustomUserDetailsService customUserDetailsService,Password
         .expiredUrl("/login?session-expired=true")
     );
 
-// Log per il debug
-System.out.println("Spring Security FilterChain configurato correttamente.");
 
 return http.build();
 }
