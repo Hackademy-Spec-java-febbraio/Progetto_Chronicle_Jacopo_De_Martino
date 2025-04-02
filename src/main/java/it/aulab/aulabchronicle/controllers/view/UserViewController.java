@@ -1,5 +1,6 @@
 package it.aulab.aulabchronicle.controllers.view;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import jakarta.validation.Valid;
 
 @Controller
 public class UserViewController {
+    
 
     final private UserServiceInterface service;
     // Constructor injection
@@ -58,9 +60,9 @@ public class UserViewController {
         }
         service.saveUser(userDto, redirectAttributes, request);
 
-        redirectAttributes.addFlashAttribute("message", "Utente registratoconsuccesso");
+        redirectAttributes.addFlashAttribute("successMessage", "Utente registrato consuccesso");
 
-        return "redirect:/register?success";
+        return "redirect:/";
     }
 
 

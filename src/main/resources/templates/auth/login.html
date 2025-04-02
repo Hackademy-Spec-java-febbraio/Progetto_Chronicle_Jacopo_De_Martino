@@ -5,65 +5,64 @@
 
 <body>
     <div th:insert="~{index :: navbar}"></div>
-    <div th:rplace="~{index :: content}">
-        <div class="container  ">
-            <div class="row justify-content-center align-items-center min-vh-100">
-                <div class="col-md-8 col-lg-10">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title text-center fw-bold">Login</h5>
-                            <p class="card-text text-center fw-bold">Accedi al tuo accaunt</p>
-                            <div class="card-text text-center fw-bold" th:if="${param.success}">
-                                <div class="alert alert-success text-success">
-                                    Login effettutato con successo
-                                </div>
-                            </div>
-                            <div class="card-text text-center fw-bold" th:if="${param.error}">
-                                <div class="alert alert-danger text-danger">
-                                    email o password non valide
-                                </div>
-                            </div>
-                            <div class="card-text text-center fw-bold" th:if="${param.Logout}">
-                                <div class="alert alert-success text-success">
-                                    Logout effettutato con successo
-                                </div>
-                            </div>
 
+    <div class="container  ">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-8 col-lg-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center fw-bold">Login</h5>
+                        <p class="card-text text-center fw-bold">Accedi al tuo accaunt</p>
+                        <div class="card-text text-center fw-bold" th:if="${param.success}">
+                            <div class="alert alert-success text-success">
+                                Login effettutato con successo
+                            </div>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <form method="post" th:action="@{/login}">
-                                <li class="list-group-item">
-                                    <label for="username" class="form-label">username</label>
-                                    <input type="text" class="form-control" id="username" name="username"
-                                        placeholder="tua username...">
+                        <div class="card-text text-center fw-bold" th:if="${param.error}">
+                            <div class="alert alert-danger text-danger">
+                                email o password non valide
+                            </div>
+                        </div>
+                        <div class="card-text text-center fw-bold" th:if="${param.Logout}">
+                            <div class="alert alert-success text-success">
+                                Logout effettutato con successo
+                            </div>
+                        </div>
 
-                                    <!-- <p th:if="${#fields.hasErrors('email')}" class="text-danger">
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <form method="post" th:action="@{/login}">
+                            <li class="list-group-item">
+                                <label for="username" class="form-label">username</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="tua username...">
+
+                                <!-- <p th:if="${#fields.hasErrors('email')}" class="text-danger">
                                         <span th:text="${#fields.errors('email')}"></span>
                                     </p> -->
 
 
 
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password"
-                                        placeholder="tua password...">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="tua password...">
 
-                                    <!-- <p th:if="${#fields.hasErrors('password')}" class="text-danger">
+                                <!-- <p th:if="${#fields.hasErrors('password')}" class="text-danger">
                                         <span th:text="${#fields.errors('password')}"></span>
                                     </p> -->
 
-                                    <div class="button-container d-flex col-12 align-items-baseline">
-                                        <button type="submit" class="btn btn-primary mt-2 me-3">Accedi</button>
-                                        <span>Non sei registrato <a th:href="@{/register}">SingUp</a></span>
-                                    </div>
+                                <div class="button-container d-flex col-12 align-items-baseline">
+                                    <button type="submit" class="btn btn-primary mt-2 me-3">Accedi</button>
+                                    <span>Non sei registrato <a th:href="@{/register}">SingUp</a></span>
+                                </div>
 
 
-                                </li>
-                            </form>
-                        </ul>
-                        <div class="card-body">
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
-                        </div>
+                            </li>
+                        </form>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
                     </div>
                 </div>
             </div>

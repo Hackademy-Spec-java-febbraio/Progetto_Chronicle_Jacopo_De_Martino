@@ -5,10 +5,27 @@
 
 <body>
     <div th:insert="~{index :: navbar}"></div>
-    <div th:if="${param.notAuthorized}">
-        <div class="aler alert-danger text-danger">Non sei autorizzato</div>
+
+    <div class="min-vh-100">
+        <div class="containert">
+            <div th:if="${param.notAuthorized}">
+                <div class="aler alert-danger text-danger">Non sei autorizzato</div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-8">
+                    <div th:if="${successMessage}" class="alert alert-success text-success my-2">
+                        <p th:text="${successMessage}" class="text-center"></p>
+                    </div>
+                    <div th:if="${message}" class="alert alert-danger text-danger">
+                        <p th:text="${message}"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div th:replace="~{index :: content}"></div>
+
+
     <div th:insert="~{index :: footer}"></div>
 
     <!-- Include Bootstrap JS and Popper.js -->
