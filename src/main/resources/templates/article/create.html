@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+
+<head th:insert="~{index :: head}"></head>
+
+<body>
+    <div th:insert="~{index :: navbar}"></div>
+
+    <div class="container  ">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-8 col-lg-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center fw-bold" th:text="${title}">Creazione Articolo</h5>
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <form method="post" th:action="@{/articles/save}" th:object="${article}"
+                            enctype="multipart/form-data">
+                            <li class="list-group-item">
+                                <label for="title" class="form-label mt-2 mb-1 ms-1">Titolo</label>
+                                <input type="text" class="form-control" id="title" placeholder="titolo"
+                                    th:field="*{title}">
+                                <p th:errors="*{title}" class="text-danger" th:if="${#fields.hasErrors('title')}"></p>
+
+                                <label for="subtitle" class="form-label mt-2 mb-1 ms-1">Sottotitolo</label>
+                                <input type="text" class="form-control" id="subtitle" placeholder="sottotitolo.."
+                                    th:field="*{subtitle}">
+                                <p th:errors="*{subtitle}" class="text-danger" th:if="${#fields.hasErrors('subtitle')}">
+                                </p>
+
+                                <label for="body" class="form-label mt-2 mb-1 ms-1">Contenuto</label>
+                                <textarea class="form-control" id="body" placeholder="Scrivi il tuo testo..."
+                                    th:field="*{body}"></textarea>
+
+                                <p th:errors="*{body}" class="text-danger" th:if="${#fields.hasErrors('body')}"></p>
+
+
+
+                                <label for="date" class="form-label mt-2 mb-1 ms-1">Data di publicazione(8
+                                    caratteri)</label>
+                                <input type="date" class="form-control" id="date" th:field="*{publishDate}">
+
+                                <p th:errors="*{publishDate}" class="text-danger"
+                                    th:if="${#fields.hasErrors('publishDate')}"></p>
+
+                                <label for="category" class="form-label mt-2 mb-1 ms-1">Categoria</label>
+                                <select id="category" th:field="*{category}" calss="form-select">
+                                    <option th:each="category:${categories}" th:value="${category.id}"
+                                        th:text="${category.name}"></option>
+                                    <p th:errors="*{category}" class="text-danger"
+                                        th:if="${#fields.hasErrors('category')}"></p>
+                                </select>
+
+                                <label for="image" class="form-label">Immagine</label>
+                                <input type="file" name="file" id="image" calss="form-controll" />
+
+
+
+                                <div class="button-container d-flex col-12 align-items-baseline">
+                                    <button type="submit" class="btn btn-primary mt-2 me-3">Crea articolo</button>
+
+                                </div>
+                            </li>
+                        </form>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:insert="~{index :: footer}"></div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz4fnFO9gyb6kFZ1q8A8PU5Y2/OhfXy2g9B6sVZ2zAmf5b3Wgp6vXjFPC4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
