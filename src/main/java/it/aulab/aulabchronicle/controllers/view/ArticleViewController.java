@@ -1,6 +1,7 @@
 package it.aulab.aulabchronicle.controllers.view;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.aulab.aulabchronicle.dtos.ArticleDto;
 import it.aulab.aulabchronicle.models.Article;
 import it.aulab.aulabchronicle.services.ArticleService;
 import it.aulab.aulabchronicle.services.CategoryService;
@@ -51,5 +53,13 @@ public class ArticleViewController {
         articleService.create(article,principal,file);
         redirectAttributes.addFlashAttribute("successMessage", "Articolo creato con successo!");
         return "redirect:/";
+    }
+    @GetMapping
+    public String articleIndex(Model model){
+        // TODO: Implementare la logica per mostrare la lista degli articoli
+    model.addAttribute("title","Indice Aricoli");
+    List<ArticleDto> articles = articleService.readAll();
+    model.addAttribute("articles", articles);
+        return "article/index";
     }
 }
