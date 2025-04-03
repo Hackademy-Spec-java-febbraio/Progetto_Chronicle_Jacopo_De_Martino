@@ -6,21 +6,49 @@
 <body>
     <div th:insert="~{index :: navbar}"></div>
 
-    <div class="container  ">
-        <div class="row justify-content-center align-items-center min-vh-100">
-            <div class="col-md-8 col-lg-10">
-
+    <div class="row justify-content-center align-items-center ">
+        <div class="col-8">
+            <div th:if="${successMessage}" class="alert alert-success text-success my-2 mt-3">
+                <p th:text="${successMessage}" class="text-center"></p>
             </div>
         </div>
-        <div th:insert="~{index :: footer}"></div>
+    </div>
 
-        <!-- Include Bootstrap JS and Popper.js -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-            integrity="sha384-oBqDVmMz4fnFO9gyb6kFZ1q8A8PU5Y2/OhfXy2g9B6sVZ2zAmf5b3Wgp6vXjFPC4"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+    <div class="container" th:if="${articles.size()>0}">
+        <div class="row justify-content-start align-items-center min-vh-100 mb-5 pb-4">
+            <div class="col-md-4 col-lg-3 col-xl-3 col-12 mt-5 pt-4" th:each="article:${articles}">
+                <div class="card">
+                    <img class="card-img-top" th:if="${article.image != null}" th:src="${article.image.path}"
+                        alt="Card image cap">
+                    <img class="card-img-top" th:unless="${article.image != null}" th:src="@{/images/default.jpg}"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${article.title}"></h5>
+                        <p class="card-text" th:text="${article.subtitle}"></p>
+                        <p class="card-text" th:text="${article.category.name}"></p>
+                        <!-- <p class="card-text" th:text="${article.body}"></p> -->
+                        <p class="card-text" th:text="${article.publishDate}"></p>
+                        <p class="card-text" th:text="${article.user.username}"></p>
+                        <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-primary">Leggi</a>
+                    </div>
+                </div>
+            </div>
+            <div class="container" th:if="${articles.size() < 0}">
+                <div class="row justify-content-between align-items-center min-vh-100">
+                    <p>Nessun articolo trovato</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:insert="~{index :: footer}"></div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz4fnFO9gyb6kFZ1q8A8PU5Y2/OhfXy2g9B6sVZ2zAmf5b3Wgp6vXjFPC4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
