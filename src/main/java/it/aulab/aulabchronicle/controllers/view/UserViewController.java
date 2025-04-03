@@ -69,7 +69,7 @@ public class UserViewController {
         }
         if(result.hasErrors()) {
             model.addAttribute("user", userDto);
-            redirectAttributes.addFlashAttribute("message", "Registrazione fallita");
+            redirectAttributes.addFlashAttribute("errorMessage", "Registrazione fallita");
             return "redirect:auth/register";
         }
         service.saveUser(userDto, redirectAttributes, request);

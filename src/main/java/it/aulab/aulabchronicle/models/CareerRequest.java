@@ -29,7 +29,7 @@ public class CareerRequest {
     private String body;
 
     @Column(name = "is_checked")
-    private boolean isChecked;
+    private Boolean isChecked;
 
     @OneToOne
     @JoinColumn(name = "user_id")
