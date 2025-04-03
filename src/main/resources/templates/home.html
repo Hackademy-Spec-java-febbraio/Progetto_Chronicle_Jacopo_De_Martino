@@ -21,6 +21,41 @@
                     </div>
                 </div>
             </div>
+            <div class="container" th:if="${articles.size()>0}">
+                <div class="row justify-content-start align-items-center min-vh-100 mb-5 pb-4">
+                    <div class="col-md-4 col-lg-3 col-xl-3 col-12 mt-5 pt-4" th:each="article:${articles}">
+                        <div class="card">
+                            <img class="card-img-top" width="100" height="200px" th:if="${article.image != null}"
+                                th:src="${article.image.path}" alt="Card image cap">
+                            <img class="card-img-top" width="100" height="200px" th:unless="${article.image != null}"
+                                th:src="@{/images/default.jpg}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title"
+                                    th:text="${#strings.length(article.title) > 15 ? #strings.substring(article.title, 0, 15) + '...' : article.title}">
+                                </h5>
+                                <p class="card-text"
+                                    th:text="${#strings.length(article.subtitle) > 20 ? #strings.substring(article.subtitle, 0, 20) + '...' : article.subtitle}">
+                                </p>
+                                <a class="nav-link nav-item card-text"
+                                    th:href="@{/categories/search/{id}(id=${article.category.id})}"
+                                    th:text="${article.category.name}">
+
+                                </a>
+                                <!-- <p class="card-text" th:text="${article.body}"></p> -->
+                                <p class="card-text" th:text="${article.publishDate}"></p>
+                                <p class="card-text" th:text="${article.user.username}"></p>
+                                <a th:href="@{/articles/detail/{id}(id=${article.id})}"
+                                    class="btn btn-primary">Leggi</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" th:if="${articles.size() < 0}">
+                        <div class="row justify-content-between align-items-center min-vh-100">
+                            <p>Nessun articolo trovato</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

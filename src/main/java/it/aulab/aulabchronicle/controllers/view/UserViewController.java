@@ -1,7 +1,10 @@
 package it.aulab.aulabchronicle.controllers.view;
 
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +38,12 @@ public class UserViewController {
 
     //Rotta per la homepage
     @GetMapping("/")
-    public String showHomePage() {
+    public String showHomePage(Model model) {
+        List<ArticleDto> articles = articleService.readAll();
+        Collections.sort(articles,Comparator.comparing(ArticleDto::getPublishDate).reversed());
+        List<ArticleDto> lastThreeArticles = articles.stream().limit(8).collect(Collectors.toList());
+        model.addAttribute("articles", lastThreeArticles);
+        
         return "home";
     }
 
