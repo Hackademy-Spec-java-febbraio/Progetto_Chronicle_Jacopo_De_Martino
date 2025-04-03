@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+
+<head th:insert="~{index :: head}"></head>
+
+<body>
+    <div th:insert="~{index :: navbar}"></div>
+
+
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100 mb-5 pb-4">
+            <div class="row justify-content-center align-items-center ">
+                <div class="col-8">
+
+                    <h2 th:text="${title}" class="text-center"></h2>
+
+                </div>
+            </div>
+
+            <div class="col-md-8 col-lg-6 col-xl-6 col-12 mt-5 pt-4">
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title text-center">Richiesta</h5>
+
+                        <h4 class="card-text my-2" th:text=" 'Username : ' + ${request.user.username}"></h4>
+                        <h4 class="card-text my-2" th:text=" 'Ruolo : ' +${request.role.name}"></h4>
+                        <hr>
+                        <p th:text="'Message : ' + ${request.body}"></p>
+                        <hr>
+                        <div class="d-flex">
+                            <form th:action="@{/operations/career/request/accept/{id}(id=${request.id})}" method="post">
+                                <button class="btn btn-success mx-2" type="submit">accetta</button>
+                            </form>
+                            <a class="btn btn-primary pointer mx-2" onclick="goBack()">torna alla dashboard</a>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div th:insert="~{index :: footer}"></div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz4fnFO9gyb6kFZ1q8A8PU5Y2/OhfXy2g9B6sVZ2zAmf5b3Wgp6vXjFPC4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -43,7 +44,7 @@ public class OperationViewController {
     }
 
     @PostMapping("/career/request/save")
-public String careerRequestStore(@ModelAttribute("careerRequest")CareerRequest careerRequest,Principal principal , RedirectAttributes redirectAttributes) {
+    public String careerRequestStore(@ModelAttribute("careerRequest")CareerRequest careerRequest,Principal principal , RedirectAttributes redirectAttributes) {
         User user = userRepository.findByEmail(principal.getName());
         if(careerRequestService.isRoleAlredyAssigned(user,careerRequest)){
             redirectAttributes.addFlashAttribute("errorMessage", "Impossibile inviare la richiesta. Questo utente già ha assegnato un ruolo a questa attività.");
@@ -54,6 +55,15 @@ public String careerRequestStore(@ModelAttribute("careerRequest")CareerRequest c
 
         return "redirect:/";
     } 
+
+    @GetMapping("/career/request/detail/{id}")
+    public String careerRequestDetail( @PathVariable Long id,Model model){
+        model.addAttribute("title", "Dettaglio richiesta");
+        CareerRequest request = careerRequestService.find(id);
+        model.addAttribute("request", request);
+        return "admin/request-detail";
+    }
+
         
     
     

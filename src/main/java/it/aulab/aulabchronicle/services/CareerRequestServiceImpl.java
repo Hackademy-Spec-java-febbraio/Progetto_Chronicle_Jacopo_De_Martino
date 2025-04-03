@@ -48,8 +48,7 @@ public class CareerRequestServiceImpl implements CareerRequestService {
 
     @Override
     public CareerRequest find(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'find'");
+        return careerRequestRepository.findById(id).get();
     }
 
 }
