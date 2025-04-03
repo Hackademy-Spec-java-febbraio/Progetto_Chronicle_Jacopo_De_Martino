@@ -3,16 +3,21 @@ package it.aulab.aulabchronicle.services;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import it.aulab.aulabchronicle.dtos.ArticleDto;
+import it.aulab.aulabchronicle.dtos.UserDto;
 import it.aulab.aulabchronicle.models.Article;
+import it.aulab.aulabchronicle.models.Category;
 import it.aulab.aulabchronicle.models.User;
 import it.aulab.aulabchronicle.repositories.ArticleRepository;
 import it.aulab.aulabchronicle.repositories.UserRepository;
@@ -44,8 +49,12 @@ public class ArticleService implements CrudService<ArticleDto,Article,Long>{
 
     @Override
     public ArticleDto readById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readById'");
+       Optional<Article> optArticle = articleRepository.findById(id);
+       if(optArticle.isPresent()){
+        return mapper.map(optArticle.get(),ArticleDto.class);
+       }else{
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Author id = "+ id + " not found");
+       }
     }
 
     @Override
@@ -85,6 +94,22 @@ public class ArticleService implements CrudService<ArticleDto,Article,Long>{
     public void delete(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    public List<ArticleDto> seachByCategory(Category category) {
+        List<ArticleDto> dtos = new ArrayList<ArticleDto>();
+        for(Article article : articleRepository.findByCategory(category)){
+            dtos.add(mapper.map(article,ArticleDto.class));
+        }
+        return dtos;
+    }
+
+    public List<ArticleDto> searchByAuthor(User user) {
+        List<ArticleDto> dtos = new ArrayList<ArticleDto>();
+        for(Article article : articleRepository.findByUser(user)){
+            dtos.add(mapper.map(article,ArticleDto.class));
+        }
+        return dtos;
     }
 
 }

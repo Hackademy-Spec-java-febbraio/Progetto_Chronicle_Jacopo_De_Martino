@@ -4,6 +4,7 @@ package it.aulab.aulabchronicle.services;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.aulab.aulabchronicle.dtos.CategoryDto;
 import it.aulab.aulabchronicle.dtos.UserDto;
 import it.aulab.aulabchronicle.models.Role;
 import it.aulab.aulabchronicle.models.User;
@@ -30,6 +32,7 @@ public class UserServiceImplement implements UserServiceInterface {
     final private RoleRepository roleRepository;
     final private CustomUserDetailsService detailsService;
     final private AuthenticationManager authenticationManager;
+    
 
     @Autowired
     public UserServiceImplement(UserRepository userRepository, PasswordEncoder encoder,RoleRepository roleRepository, CustomUserDetailsService detailsService, AuthenticationManager authenticationManager) {
@@ -38,6 +41,7 @@ public class UserServiceImplement implements UserServiceInterface {
         this.roleRepository = roleRepository;
         this.detailsService = detailsService;
         this.authenticationManager = authenticationManager;
+        
     }
 
     //!Spostata in app
@@ -77,6 +81,13 @@ public class UserServiceImplement implements UserServiceInterface {
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+       @Override
+    public User find(Long id) {
+        return userRepository.findById(id).get();
+    }
+
+    
 
 
 

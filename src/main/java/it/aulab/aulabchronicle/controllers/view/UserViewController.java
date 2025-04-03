@@ -1,17 +1,21 @@
 package it.aulab.aulabchronicle.controllers.view;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.aulab.aulabchronicle.dtos.ArticleDto;
 import it.aulab.aulabchronicle.dtos.UserDto;
 import it.aulab.aulabchronicle.models.User;
-
+import it.aulab.aulabchronicle.services.ArticleService;
 import it.aulab.aulabchronicle.services.UserServiceInterface;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,9 +26,11 @@ public class UserViewController {
     
 
     final private UserServiceInterface service;
+    final private ArticleService articleService;
     // Constructor injection
-    public UserViewController(UserServiceInterface service) {
+    public UserViewController(UserServiceInterface service,ArticleService articleService) {
         this.service = service;
+        this.articleService = articleService;
     }
 
     //Rotta per la homepage
@@ -63,6 +69,15 @@ public class UserViewController {
         redirectAttributes.addFlashAttribute("successMessage", "Utente registrato consuccesso");
 
         return "redirect:/";
+    }
+
+    @GetMapping("search/{id}")
+    public String searchArticleUser(@PathVariable("id") Long id, Model model){
+        User user = service.find(id);
+        model.addAttribute("title", "Tutti gli articoli trovati per utente" + user.getUsername());
+        List<ArticleDto> articles = articleService.searchByAuthor(user);
+        model.addAttribute("articles", articles);
+        return "article/user-articles";
     }
 
 

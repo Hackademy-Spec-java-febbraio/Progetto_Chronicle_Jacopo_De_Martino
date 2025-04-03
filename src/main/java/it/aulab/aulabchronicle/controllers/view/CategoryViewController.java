@@ -1,0 +1,46 @@
+package it.aulab.aulabchronicle.controllers.view;
+
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import it.aulab.aulabchronicle.dtos.ArticleDto;
+import it.aulab.aulabchronicle.dtos.CategoryDto;
+import it.aulab.aulabchronicle.models.Category;
+import it.aulab.aulabchronicle.services.ArticleService;
+import it.aulab.aulabchronicle.services.CategoryService;
+
+@Controller
+@RequestMapping("/categories")
+public class CategoryViewController {
+    
+    private final ArticleService articleService;
+    private final CategoryService categoryService;
+    private final ModelMapper mapper;
+
+   public CategoryViewController(ArticleService articleService, CategoryService categoryService, ModelMapper mapper) {
+      this.articleService = articleService;
+      this.categoryService = categoryService;
+      this.mapper = mapper;
+   }
+
+   @GetMapping("/search/{id}")
+   public String categorySearch(@PathVariable("id") Long id,Model model){
+    CategoryDto categoryDto = categoryService.readById(id);
+    model.addAttribute("title", "Tutti gli articoli per categoria" + categoryDto.getName());
+    List<ArticleDto> articles = articleService.seachByCategory(mapper.map(categoryDto,Category.class));
+    model.addAttribute("articles", articles);
+    return "article/categories";
+    
+    
+   }
+
+
+   
+
+}
