@@ -18,7 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import it.aulab.aulabchronicle.dtos.ArticleDto;
 import it.aulab.aulabchronicle.dtos.UserDto;
 import it.aulab.aulabchronicle.models.User;
+import it.aulab.aulabchronicle.repositories.CareerRequestRepository;
 import it.aulab.aulabchronicle.services.ArticleService;
+import it.aulab.aulabchronicle.services.CareerRequestService;
+import it.aulab.aulabchronicle.services.CategoryService;
 import it.aulab.aulabchronicle.services.UserServiceInterface;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,10 +33,15 @@ public class UserViewController {
 
     final private UserServiceInterface service;
     final private ArticleService articleService;
+    final private CareerRequestRepository careerRequestRepository;
+    final private CategoryService categoryService;
+
     // Constructor injection
-    public UserViewController(UserServiceInterface service,ArticleService articleService) {
+    public UserViewController(UserServiceInterface service,ArticleService articleService, CareerRequestRepository careerRequestRepository, CategoryService categoryService) {
         this.service = service;
         this.articleService = articleService;
+        this.careerRequestRepository = careerRequestRepository;
+        this.categoryService = categoryService;
     }
 
     //Rotta per la homepage
@@ -87,6 +95,16 @@ public class UserViewController {
         model.addAttribute("articles", articles);
         return "article/user-articles";
     }
+
+    @GetMapping("admin/dashboard")
+    public String showAdminDashboard(Model model){
+        model.addAttribute("title" , "Richieste ricevute");
+        model.addAttribute("requests", careerRequestRepository.findByIsCheckedFalse());
+        model.addAttribute("categories", categoryService.readAll());
+
+        return "admin/dashboard";
+    }
+
 
 
 }
