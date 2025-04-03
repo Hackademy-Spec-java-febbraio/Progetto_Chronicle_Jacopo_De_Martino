@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import it.aulab.aulabchronicle.dtos.ArticleDto;
-import it.aulab.aulabchronicle.dtos.UserDto;
+
 import it.aulab.aulabchronicle.models.Article;
 import it.aulab.aulabchronicle.models.Category;
 import it.aulab.aulabchronicle.models.User;

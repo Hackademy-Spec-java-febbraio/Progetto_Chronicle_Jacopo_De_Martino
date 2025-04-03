@@ -4,7 +4,7 @@ package it.aulab.aulabchronicle.services;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import it.aulab.aulabchronicle.dtos.CategoryDto;
+
 import it.aulab.aulabchronicle.dtos.UserDto;
 import it.aulab.aulabchronicle.models.Role;
 import it.aulab.aulabchronicle.models.User;
