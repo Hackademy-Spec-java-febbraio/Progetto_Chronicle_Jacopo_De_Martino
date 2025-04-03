@@ -1,6 +1,8 @@
 package it.aulab.aulabchronicle.controllers.view;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,9 +58,11 @@ public class ArticleViewController {
     }
     @GetMapping
     public String articleIndex(Model model){
-        // TODO: Implementare la logica per mostrare la lista degli articoli
+        // DO: Implementare la logica per mostrare la lista degli articoli
     model.addAttribute("title","Indice Aricoli");
     List<ArticleDto> articles = articleService.readAll();
+
+    Collections.sort(articles,Comparator.comparing(ArticleDto::getPublishDate).reversed());
     model.addAttribute("articles", articles);
         return "article/index";
     }

@@ -18,10 +18,10 @@
         <div class="row justify-content-start align-items-center min-vh-100 mb-5 pb-4">
             <div class="col-md-4 col-lg-3 col-xl-3 col-12 mt-5 pt-4" th:each="article:${articles}">
                 <div class="card">
-                    <img class="card-img-top" th:if="${article.image != null}" th:src="${article.image.path}"
-                        alt="Card image cap">
-                    <img class="card-img-top" th:unless="${article.image != null}" th:src="@{/images/default.jpg}"
-                        alt="Card image cap">
+                    <img class="card-img-top" width="100" height="200px" th:if="${article.image != null}"
+                        th:src="${article.image.path}" alt="Card image cap">
+                    <img class="card-img-top" width="100" height="200px" th:unless="${article.image != null}"
+                        th:src="@{/images/default.jpg}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${article.title}"></h5>
                         <p class="card-text" th:text="${article.subtitle}"></p>
