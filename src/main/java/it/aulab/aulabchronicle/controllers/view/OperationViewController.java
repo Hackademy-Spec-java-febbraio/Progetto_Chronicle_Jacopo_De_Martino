@@ -64,6 +64,13 @@ public class OperationViewController {
         return "admin/request-detail";
     }
 
+    @PostMapping("/career/request/accept/{requestId}")
+    public String careerRequestAccept(@PathVariable Long requestId, RedirectAttributes redirectAttributes){
+        careerRequestService.careerAccept(requestId);
+        redirectAttributes.addFlashAttribute("messageSuccessRequest", "Richiesta accettata con successo!");
+        return "redirect:/admin/dashboard";
+    }
+
         
     
     

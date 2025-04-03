@@ -51,8 +51,12 @@
                                     Articolo</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" aria-current="page"
-                                    th:href="@{/operations/career/request}">Lavora con noi</a>
+                                <a class="dropdown-item" aria-current="page" th:href="@{/operations/career/request}"
+                                    sec:authorize="!hasRole('ROLE_ADMIN')">Lavora con noi</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" aria-current="page" th:href="@{/admin/dashboard}"
+                                    sec:authorize="hasRole('ROLE_ADMIN')">dashboard</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" aria-current="page" th:href="@{/logout}">Logout</a>

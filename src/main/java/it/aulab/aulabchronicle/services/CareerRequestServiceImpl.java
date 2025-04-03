@@ -5,18 +5,25 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import it.aulab.aulabchronicle.models.CareerRequest;
+import it.aulab.aulabchronicle.models.Role;
 import it.aulab.aulabchronicle.models.User;
 import it.aulab.aulabchronicle.repositories.CareerRequestRepository;
+import it.aulab.aulabchronicle.repositories.RoleRepository;
+import it.aulab.aulabchronicle.repositories.UserRepository;
 
 @Service
 public class CareerRequestServiceImpl implements CareerRequestService {
 
     final private CareerRequestRepository careerRequestRepository; 
     final private EmailService emailService;
+    final private RoleRepository roleRepository;
+    final private UserRepository userRepository;
 
-    public CareerRequestServiceImpl(CareerRequestRepository careerRequestRepository,EmailService emailService) {
+    public CareerRequestServiceImpl(CareerRequestRepository careerRequestRepository,EmailService emailService, RoleRepository roleRepository, UserRepository userRepository) {
         this.careerRequestRepository = careerRequestRepository;
         this.emailService = emailService;
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -42,8 +49,23 @@ public class CareerRequestServiceImpl implements CareerRequestService {
 
     @Override
     public void careerAccept(Long requestId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'careerAccept'");
+        // recupero della richiesta
+        CareerRequest request = careerRequestRepository.findById(requestId).get();
+        //dalla richiesta prendo l'utente e il ruolo richiesto
+        User user = request.getUser();
+        Role role = request.getRole();
+        //recupero i ruoli gia in possesso dell'utente
+        List<Role> rolesUser = user.getRoles();
+        Role newRole = roleRepository.findByName(role.getName());
+        rolesUser.add(newRole);
+        //salviamo le modifiche
+        user.setRoles(rolesUser);
+        userRepository.save(user);
+        //setto la richiesta come confermata
+        request.setIsChecked(true);
+        careerRequestRepository.save(request);
+
+        emailService.sendSimpleEmail(user.getEmail(),"Ruolo abilitato", "Ciao la tua richiesta di collaborazione è stata accettata dalla nostra amministazione ecco i tuoi ruoli" + user.getRoles());
     }
 
     @Override
