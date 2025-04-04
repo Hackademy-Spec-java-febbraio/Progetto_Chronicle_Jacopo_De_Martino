@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -100,5 +101,25 @@ public class ArticleViewController {
         model.addAttribute("title", "Article Detail");
         model.addAttribute("article", articleService.readById(id));
         return "revisor/detail";
+    }
+
+    @PostMapping("/accept")
+    public String articleSetAccept(@RequestParam("action") String action, @RequestParam("articleId") Long articleId,RedirectAttributes redirectAttributes){
+        if(action.equals("accept")){
+            articleService.setIsAccept(true, articleId);
+            redirectAttributes.addFlashAttribute("successMessage", "Articolo accettato con successo!");   
+        }else if(action.equals("reject")){
+            articleService.setIsAccept(false,articleId);
+            redirectAttributes.addFlashAttribute("successMessage", "Articolo rifutato con successo!");
+
+            
+        }else{
+            redirectAttributes.addFlashAttribute("errorMessage", "Azione non corretta!");
+        }
+
+
+
+        return "redirect:/revisor/dashboard";
+        
     }
 }

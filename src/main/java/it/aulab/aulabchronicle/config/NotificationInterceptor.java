@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import it.aulab.aulabchronicle.repositories.ArticleRepository;
 import it.aulab.aulabchronicle.repositories.CareerRequestRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,8 +14,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class NotificationInterceptor implements HandlerInterceptor{
 
     final private CareerRequestRepository careerRequestRepository;
-    public NotificationInterceptor(CareerRequestRepository careerRequestRepository) {
+
+    final private ArticleRepository articleRepository;
+
+    public NotificationInterceptor(CareerRequestRepository careerRequestRepository, ArticleRepository articleRepository) {
         this.careerRequestRepository = careerRequestRepository;
+        this.articleRepository = articleRepository;
     }
     
 
@@ -24,6 +29,10 @@ public class NotificationInterceptor implements HandlerInterceptor{
         if(modelAndView != null && request.isUserInRole("ROLE_ADMIN")){
             int careerCount = careerRequestRepository.findByIsCheckedFalse().size();
             modelAndView.addObject("careerRequests", careerCount);  
+        }
+        if(modelAndView != null && request.isUserInRole("ROLE_ADMIN") || request.isUserInRole("ROLE_REVISOR")){
+            int articleCount = articleRepository.findByIsAcceptedIsFalse().size();
+            modelAndView.addObject("articleCount", articleCount);  
         }
 	}
 }

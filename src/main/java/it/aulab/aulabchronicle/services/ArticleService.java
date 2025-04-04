@@ -115,4 +115,10 @@ public class ArticleService implements CrudService<ArticleDto,Article,Long>{
         return dtos;
     }
 
+    public void setIsAccept(boolean b, Long articleId) {
+        Article article = articleRepository.findById(articleId).get();
+        article.setIsAccepted(b);
+        articleRepository.save(article);
+    }
+
 }

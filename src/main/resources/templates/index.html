@@ -57,11 +57,24 @@
                             <li>
                                 <a class="dropdown-item position-relative" aria-current="page"
                                     th:href="@{/admin/dashboard}" sec:authorize="hasRole('ROLE_ADMIN')">
-                                    dashboard
+                                    dashboard collab
                                     <span th:if="${careerRequests != null and careerRequests > 0}"
                                         class="position-absolute top-50 translate-middle badge rounded-pill bg-danger"
-                                        style="left:71%">
+                                        style="left:100%">
                                         <span th:text="${careerRequests}"></span>
+                                        <span class="visually-hidden">richieste in sospeso</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item position-relative" aria-current="page"
+                                    th:href="@{/revisor/dashboard}"
+                                    sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_REVISOR')">
+                                    dashboard articoli
+                                    <span th:if="${articleCount != null and articleCount > 0}"
+                                        class="position-absolute top-50 translate-middle badge rounded-pill bg-danger"
+                                        style="left:100%">
+                                        <span th:text="${articleCount}"></span>
                                         <span class="visually-hidden">richieste in sospeso</span>
                                     </span>
                                 </a>
