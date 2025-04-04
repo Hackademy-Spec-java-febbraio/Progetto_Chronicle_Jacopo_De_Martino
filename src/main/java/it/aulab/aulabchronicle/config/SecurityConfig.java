@@ -33,7 +33,8 @@ public SecurityConfig(CustomUserDetailsService customUserDetailsService,Password
     http
     .csrf(csrf -> csrf.disable())
     .authorizeHttpRequests(authorize -> authorize
-        .requestMatchers("/register/**", "/register", "/","/articles","/images/**","/articles/detail/**", "/search/{id}").permitAll()
+    .requestMatchers("/admin/**").hasRole("ADMIN")
+        .requestMatchers("/register/**", "/register", "/","/articles","/images/**","/articles/detail/**", "/search/**","/categories/**").permitAll()
         .anyRequest().authenticated()
     )
     .formLogin(login -> login

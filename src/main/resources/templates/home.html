@@ -8,12 +8,12 @@
 
     <div class="min-vh-100">
         <div class="containert">
-            <div th:if="${param.notAuthorized}">
-                <div class="aler alert-danger text-danger">Non sei autorizzato</div>
-            </div>
             <div class="row justify-content-center align-items-center mt-3">
                 <div class="col-8">
-                    <div th:if="${successMessage}" class="alert alert-success text-success my-2 mt-3">
+                    <div th:if="${param.notAuthorized}" class=" alert alert-danger text-danger  my-2 mt-3">
+                        <div class="text-center">Non sei autorizzato</div>
+                    </div>
+                    <div th:if=" ${successMessage}" class="alert alert-success text-success my-2 mt-3">
                         <p th:text="${successMessage}" class="text-center"></p>
                     </div>
                     <div th:if="${messageSuccessRequest}" class="alert alert-success text-success my-2 mt-3">

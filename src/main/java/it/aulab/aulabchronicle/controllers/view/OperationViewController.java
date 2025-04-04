@@ -56,7 +56,7 @@ public class OperationViewController {
         return "redirect:/";
     } 
 
-    @GetMapping("/career/request/detail/{id}")
+    @GetMapping("/admin/career/request/detail/{id}")
     public String careerRequestDetail( @PathVariable Long id,Model model){
         model.addAttribute("title", "Dettaglio richiesta");
         CareerRequest request = careerRequestService.find(id);

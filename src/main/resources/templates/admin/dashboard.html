@@ -30,7 +30,7 @@
                         <td th:text="${request.id}"></td>
                         <td th:text="${request.user.username}"></td>
                         <td th:text="${request.role.name}"></td>
-                        <td><a th:href="@{/operations/career/request/detail/{id}(id=${request.id})}"
+                        <td><a th:href="@{/admin/operations/career/request/detail/{id}(id=${request.id})}"
                                 class="btn btn-info" th:text="info">
                             </a></td>
                     </tr>

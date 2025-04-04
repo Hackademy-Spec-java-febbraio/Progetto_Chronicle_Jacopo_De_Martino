@@ -20,25 +20,37 @@
                         th:src="@{/images/default.jpg}" alt="Immagine di default">
 
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <h5 class="card-title" th:text="${article.title}"></h5>
+                            </div>
+                            <div class="col-3">
+                                <a class="nav-link nav-item card-text"
+                                    th:href="@{/categories/search/{id}(id=${article.category.id})}"
+                                    th:text="${article.category.name}">
+                                </a>
 
-                        <h5 class="card-title" th:text="${article.title}"></h5>
+                            </div>
+                        </div>
 
                         <p class="card-text" th:text="${article.subtitle}"></p>
 
-                        <a class="nav-link nav-item card-text"
-                            th:href="@{/categories/search/{id}(id=${article.category.id})}"
-                            th:text="${article.category.name}">
 
-                            <p class="card-text" th:text="${article.body}"></p>
+                        <p class="card-text" th:text="${article.body}"></p>
 
-                            <p class="card-text" th:text="${article.publishDate}"></p>
+                        <p class="card-text" th:text="${article.publishDate}"></p>
 
-                            <p class="card-text" th:text="${article.user.username}"></p>
+                        <a class="nav-link nav-item card-text" th:href="@{/search/{id}(id=${article.user.id})}"
+                            th:text="${article.user.username}">
 
+                        </a>
+
+                        <div class="my-2">
                             <!-- versione thymeleaf -->
-                            <a th:href="@{/articles}" class="btn btn-primary">Torna agli articoli</a>
+                            <!-- <a th:href="@{/articles}" class="btn btn-primary">Torna agli articoli</a> -->
                             <!-- versione javascript -->
                             <a class="btn btn-primary pointer" onclick="goBack()">Torna agli articoli</a>
+                        </div>
                     </div>
                 </div>
             </div>

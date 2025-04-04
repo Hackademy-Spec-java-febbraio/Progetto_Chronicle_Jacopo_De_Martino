@@ -36,7 +36,10 @@
                         </a>
                         <!-- <p class="card-text" th:text="${article.body}"></p> -->
                         <p class="card-text" th:text="${article.publishDate}"></p>
-                        <p class="card-text" th:text="${article.user.username}"></p>
+                        <a class="nav-link nav-item card-text" th:href="@{/search/{id}(id=${article.user.id})}"
+                            th:text="${article.user.username}">
+
+                        </a>
                         <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-primary">Leggi</a>
                     </div>
                 </div>
