@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+
+<head th:insert="~{index :: head}"></head>
+
+<body>
+    <div th:insert="~{index :: navbar}"></div>
+
+    <div class="row justify-content-center align-items-center ">
+        <div class="col-8">
+
+            <h2 th:text="${title}" class="text-center"></h2>
+
+        </div>
+    </div>
+
+    <div class="container ">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-8 col-lg-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center fw-bold">Inserisci una categoria</h5>
+
+                        <div class="card-text text-center fw-bold" th:if="${param.success}">
+                            <div class="alert alert-success text-success">
+                                Categoria aggiunta con successo
+                            </div>
+                        </div>
+                        <div class="card-text text-center fw-bold" th:if="${param.error}">
+                            <div class="alert alert-danger text-danger">
+                                Errore : categoria non aggiunta con successo
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <form method="post" th:action="@{/categories/save}" th:object="${category}">
+                            <li class="list-group-item">
+                                <label for="categoryName" class="form-label mt-2 mb-1 ms-1">Nome categoria</label>
+                                <input type="text" class="form-control" id="categoryName" name="categoryName"
+                                    placeholder="categoria .." th:field="*{name}">
+
+                                <p th:if="${#fields.hasErrors('name')}" class="text-danger">
+                                    <span th:text="${#fields.errors('name')}"></span>
+
+
+                                <div class="button-container d-flex col-12 align-items-baseline">
+                                    <button type="submit" class="btn btn-primary mt-2 me-3">Aggiungi</button>
+                                </div>
+                            </li>
+                        </form>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:insert="~{index :: footer}"></div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz4fnFO9gyb6kFZ1q8A8PU5Y2/OhfXy2g9B6sVZ2zAmf5b3Wgp6vXjFPC4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

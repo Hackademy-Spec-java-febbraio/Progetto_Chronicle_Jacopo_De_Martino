@@ -11,6 +11,7 @@ import it.aulab.aulabchronicle.models.CareerRequest;
 
 @Repository
 public interface CareerRequestRepository extends CrudRepository<CareerRequest,Long> {
+    // @Query(value = "SELECT * FROM career_request WHERE is_checked = 0", nativeQuery = true)
     List<CareerRequest> findByIsCheckedFalse();
     @Query(value = "SELECT user_id FROM user_roles", nativeQuery = true)
     List<Long> findAllUserIds();

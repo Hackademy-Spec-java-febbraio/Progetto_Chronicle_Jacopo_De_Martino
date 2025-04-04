@@ -55,8 +55,16 @@
                                     sec:authorize="!hasRole('ROLE_ADMIN')">Lavora con noi</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" aria-current="page" th:href="@{/admin/dashboard}"
-                                    sec:authorize="hasRole('ROLE_ADMIN')">dashboard</a>
+                                <a class="dropdown-item position-relative" aria-current="page"
+                                    th:href="@{/admin/dashboard}" sec:authorize="hasRole('ROLE_ADMIN')">
+                                    dashboard
+                                    <span th:if="${careerRequests != null and careerRequests > 0}"
+                                        class="position-absolute top-50 translate-middle badge rounded-pill bg-danger"
+                                        style="left:71%">
+                                        <span th:text="${careerRequests}"></span>
+                                        <span class="visually-hidden">richieste in sospeso</span>
+                                    </span>
+                                </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" aria-current="page" th:href="@{/logout}">Logout</a>

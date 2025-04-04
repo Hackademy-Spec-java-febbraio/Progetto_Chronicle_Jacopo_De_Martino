@@ -8,35 +8,101 @@
 
     <div class="row justify-content-center align-items-center ">
         <div class="col-8">
+            <div th:if="${successMessage}" class="alert alert-success text-success my-2 mt-3">
+                <p th:text="${successMessage}" class="text-center"></p>
+            </div>
+        </div>
+    </div>
 
+
+    <div class="row justify-content-center align-items-center ">
+        <div class="col-8">
             <h2 th:text="${title}" class="text-center"></h2>
-
         </div>
     </div>
 
     <div class="container">
         <div class="row justify-content-start align-items-center min-vh-100 mb-5 pb-4">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Utente</th>
-                        <th scope="col">Ruolo</th>
-                        <th scope="col">#Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="request:${requests}">
-                        <td th:text="${request.id}"></td>
-                        <td th:text="${request.user.username}"></td>
-                        <td th:text="${request.role.name}"></td>
-                        <td><a th:href="@{/admin/operations/career/request/detail/{id}(id=${request.id})}"
-                                class="btn btn-info" th:text="info">
-                            </a></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="col-12">
+                <table class="table table-striped table-responsive-lg">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Utente</th>
+                            <th>Ruolo</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="request : ${requests}">
+                            <td th:text="${request.id}"></td>
+                            <td th:text="${request.user.username}"></td>
+                            <td th:text="${request.role.name}"></td>
+                            <td class="text-end">
+                                <!-- Pulsante Info -->
+                                <a th:href="@{/operations/admin/career/request/detail/{id}(id=${request.id})}"
+                                    class="btn btn-info btn-sm me-1" title="Dettagli">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
 
+                                <!-- Pulsante Update -->
+                                <a th:href="@{/operations/admin/career/request/detail/{id}(id=${request.id})}"
+                                    class="btn btn-warning btn-sm me-1" title="Modifica">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <!-- Pulsante Delete -->
+                                <a th:href="@{/operations/admin/career/request/detail/{id}(id=${request.id})}"
+                                    class="btn btn-danger btn-sm" title="Elimina"
+                                    onclick="return confirm('Sei sicuro di voler eliminare questa richiesta?');">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-start align-items-center min-vh-100 mb-5 pb-4">
+            <!-- Intestazione con titolo e pulsante + -->
+            <div class="col-12 my-5 d-flex justify-content-center align-items-center">
+                <span class="">Tutte le categorie</span>
+                <a th:href="@{/categories/admin/create}" th:text="'+'" class="btn btn-primary m-2 rounded-pill">
+
+                </a>
+            </div>
+
+            <!-- Tabella categorie -->
+            <div class="col-12">
+                <table class="table table-striped table-responsive-lg">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th class="text-end">#Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="category : ${categories}">
+                            <td th:text="${category.id}"></td>
+                            <td th:text="${category.name}"></td>
+                            <td class="text-end">
+                                <!-- Pulsanti azioni -->
+                                <a th:href="@{/categories/admin/edit/{id}(id=${category.id})}"
+                                    class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a th:href="@{'/categories/delete/' + ${category.id}}"
+                                    class="btn btn-sm btn-danger ms-1">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div th:insert="~{index :: footer}"></div>

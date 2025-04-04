@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import it.aulab.aulabchronicle.dtos.CategoryDto;
 import it.aulab.aulabchronicle.models.Category;
@@ -38,14 +40,17 @@ public class CategoryService implements CrudService<CategoryDto,Category,Long>{
 
     @Override
     public CategoryDto create(Category model, Principal principal, MultipartFile file) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return modelMapper.map(categoryRepository.save(model),CategoryDto.class);
     }
 
     @Override
     public CategoryDto update(Long id, Category model, MultipartFile file) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+       if(categoryRepository.existsById(id)){
+           model.setId(id);
+           return modelMapper.map(categoryRepository.save(model),CategoryDto.class);
+       }else{
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+       } 
     }
 
     @Override
