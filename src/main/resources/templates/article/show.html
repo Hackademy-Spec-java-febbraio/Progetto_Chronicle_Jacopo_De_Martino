@@ -25,10 +25,13 @@
                                 <h5 class="card-title" th:text="${article.title}"></h5>
                             </div>
                             <div class="col-3">
-                                <a class="nav-link nav-item card-text"
+                                <a th:if="${article.category != null}" class="nav-link nav-item card-text"
                                     th:href="@{/categories/search/{id}(id=${article.category.id})}"
                                     th:text="${article.category.name}">
                                 </a>
+                                <span th:unless="${article.category != null}" class="nav-link nav-item card-text">
+                                    Categoria eliminata
+                                </span>
 
                             </div>
                         </div>

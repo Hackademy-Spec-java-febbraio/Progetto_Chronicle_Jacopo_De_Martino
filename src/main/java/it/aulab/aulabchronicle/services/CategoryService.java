@@ -11,8 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import it.aulab.aulabchronicle.dtos.CategoryDto;
+import it.aulab.aulabchronicle.models.Article;
 import it.aulab.aulabchronicle.models.Category;
 import it.aulab.aulabchronicle.repositories.CategoryRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class CategoryService implements CrudService<CategoryDto,Category,Long>{
@@ -54,9 +56,21 @@ public class CategoryService implements CrudService<CategoryDto,Category,Long>{
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        if(categoryRepository.existsById(id)){
+            Category category = categoryRepository.findById(id).get();
+            //! rimuoviamo la relazione con l'articolo prima di cancellare la categoria
+            if(category.getArticles() != null){
+                Iterable<Article> articles = category.getArticles();
+                for(Article article : articles){
+                    article.setCategory(null);
+                }
+            }
+        categoryRepository.deleteById(id);
+        }else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
     
 }

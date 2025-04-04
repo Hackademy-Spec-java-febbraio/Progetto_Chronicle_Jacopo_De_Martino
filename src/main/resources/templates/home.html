@@ -40,11 +40,13 @@
                                 <p class="card-text"
                                     th:text="${#strings.length(article.subtitle) > 20 ? #strings.substring(article.subtitle, 0, 20) + '...' : article.subtitle}">
                                 </p>
-                                <a class="nav-link nav-item card-text"
+                                <a th:if="${article.category != null}" class="nav-link nav-item card-text"
                                     th:href="@{/categories/search/{id}(id=${article.category.id})}"
                                     th:text="${article.category.name}">
-
                                 </a>
+                                <span th:unless="${article.category != null}" class="nav-link nav-item card-text">
+                                    Categoria eliminata
+                                </span>
                                 <!-- <p class="card-text" th:text="${article.body}"></p> -->
                                 <p class="card-text" th:text="${article.publishDate}"></p>
                                 <p class="card-text" th:text="${article.user.username}"></p>

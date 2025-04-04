@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -85,6 +86,13 @@ public class CategoryViewController {
       
       return "redirect:/admin/dashboard";
       
+   }
+
+   @GetMapping("/admin/delete/{id}")
+   public String categoryDelete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    categoryService.delete(id);
+    redirectAttributes.addFlashAttribute("successMessage", "Categoria cancellata con successo!");
+    return "redirect:/admin/dashboard";
    }
    
 
