@@ -99,7 +99,7 @@ public class ArticleService implements CrudService<ArticleDto,Article,Long>{
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
-    public List<ArticleDto> seachByCategory(Category category) {
+    public List<ArticleDto> searchByCategory(Category category) {
         List<ArticleDto> dtos = new ArrayList<ArticleDto>();
         for(Article article : articleRepository.findByCategory(category)){
             dtos.add(mapper.map(article,ArticleDto.class));

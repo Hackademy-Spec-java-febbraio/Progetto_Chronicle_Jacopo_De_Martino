@@ -1,6 +1,7 @@
 package it.aulab.aulabchronicle.controllers.view;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -38,10 +39,17 @@ public class CategoryViewController {
 
    @GetMapping("/search/{id}")
    public String categorySearch(@PathVariable("id") Long id,Model model){
+
     CategoryDto categoryDto = categoryService.readById(id);
+
     model.addAttribute("title", "Tutti gli articoli per categoria" + categoryDto.getName());
-    List<ArticleDto> articles = articleService.seachByCategory(mapper.map(categoryDto,Category.class));
-    model.addAttribute("articles", articles);
+
+    List<ArticleDto> articles = articleService.searchByCategory(mapper.map(categoryDto,Category.class));
+
+    //filtriamo solo gli articoli che hanno isAccepted su true! <3
+    List<ArticleDto> acceptedArticles = articles.stream().filter(a-> Boolean.TRUE.equals(a.getIsAccepted())).collect(Collectors.toList());
+
+    model.addAttribute("articles", acceptedArticles);
     return "article/categories";
     
    }

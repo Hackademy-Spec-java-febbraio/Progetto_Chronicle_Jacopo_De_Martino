@@ -104,7 +104,11 @@ public class UserViewController {
         User user = service.find(id);
         model.addAttribute("title", "Tutti gli articoli trovati per utente" + user.getUsername());
         List<ArticleDto> articles = articleService.searchByAuthor(user);
-        model.addAttribute("articles", articles);
+
+        //filtriamo solo gli articoli che hanno isAccepted su true! <3
+        List<ArticleDto> acceptedArticles = articles.stream().filter(a-> Boolean.TRUE.equals(a.getIsAccepted())).collect(Collectors.toList());
+
+        model.addAttribute("articles", acceptedArticles);
         return "article/user-articles";
     }
 
