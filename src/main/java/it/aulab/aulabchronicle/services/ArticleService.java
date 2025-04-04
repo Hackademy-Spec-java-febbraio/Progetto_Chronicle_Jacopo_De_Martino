@@ -77,7 +77,10 @@ public class ArticleService implements CrudService<ArticleDto,Article,Long>{
         }
       }
 
+      article.setIsAccepted(false);
+
       ArticleDto dto =mapper.map(articleRepository.save(article),ArticleDto.class);
+
       if(!file.isEmpty()){
         imageService.saveImageOnDB(url,article);
       }

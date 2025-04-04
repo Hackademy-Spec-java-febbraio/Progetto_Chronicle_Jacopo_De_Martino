@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+
+<head th:insert="~{index :: head}"></head>
+
+<body>
+    <div th:insert="~{index :: navbar}"></div>
+
+
+    <div class="container">
+        <div class="row justify-content-center align-items-start min-vh-100 mb-5 pb-4">
+            <!-- Colonna per il contenuto principale dell'articolo -->
+            <div class="col-md-8 col-lg-6 col-xl-6 col-12 mt-5 pt-4">
+                <div class="card">
+                    <div id="carouselExampleIndicators" class="carousel slide">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" width="100%" height="380px" th:if="${article.image != null}"
+                                    th:src="${article.image.path}" alt="Immagine dell'articolo">
+
+                                <img class="card-img-top" width="100%" height="380px"
+                                    th:unless="${article.image != null}" th:src="@{/images/default.jpg}"
+                                    alt="Immagine di default">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h5 class="card-title" th:text="${article.title}"></h5>
+                            </div>
+                            <div class="col-4">
+                                <a th:if="${article.category != null}" class="nav-link nav-item card-text"
+                                    th:href="@{/categories/search/{id}(id=${article.category.id})}"
+                                    th:text="${article.category.name}">
+                                </a>
+                                <span th:unless="${article.category != null}" class="nav-link nav-item card-text">
+                                    Nessuna categoria
+                                </span>
+
+                            </div>
+                        </div>
+
+                        <p class="card-text" th:text="${article.subtitle}"></p>
+
+
+                        <p class="card-text" th:text="${article.body}"></p>
+
+                        <p class="card-text" th:text="${article.publishDate}"></p>
+
+                        <a class="nav-link nav-item card-text" th:href="@{/search/{id}(id=${article.user.id})}"
+                            th:text="${article.user.username}">
+
+                        </a>
+                        <div class="my-2 d-flex justify-content-between align-items-center">
+                            <div class="d-flex">
+                                <!-- Pulsante Accetta -->
+                                <form th:action="@{/articles/accept(action='accept', articleId=${article.id})}"
+                                    method="post" class="me-2">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-check-circle me-1"></i> Accetta
+                                    </button>
+                                </form>
+
+                                <!-- Pulsante Rifiuta -->
+                                <form th:action="@{/articles/accept(action='reject', articleId=${article.id})}"
+                                    method="post" th:object="${article}">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-times-circle me-1"></i> Rifiuta
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Pulsante Torna agli articoli -->
+                            <a class="btn btn-primary" onclick="goBack()">
+                                <i class="fas fa-arrow-left me-1"></i> Torna agli articoli
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:insert="~{index :: footer}"></div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz4fnFO9gyb6kFZ1q8A8PU5Y2/OhfXy2g9B6sVZ2zAmf5b3Wgp6vXjFPC4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>

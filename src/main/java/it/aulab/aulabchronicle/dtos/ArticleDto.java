@@ -20,6 +20,7 @@ public class ArticleDto {
     private String body;
     private LocalDate publishDate;
     private User user;
+    private Boolean isAccepted;
     private Category category;
     private Image image;
     

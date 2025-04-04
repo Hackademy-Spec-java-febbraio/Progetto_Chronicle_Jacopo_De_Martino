@@ -1,11 +1,13 @@
 package it.aulab.aulabchronicle.controllers.view;
 
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.aulab.aulabchronicle.dtos.ArticleDto;
 import it.aulab.aulabchronicle.dtos.UserDto;
+import it.aulab.aulabchronicle.models.Article;
 import it.aulab.aulabchronicle.models.User;
+import it.aulab.aulabchronicle.repositories.ArticleRepository;
 import it.aulab.aulabchronicle.repositories.CareerRequestRepository;
 import it.aulab.aulabchronicle.services.ArticleService;
 import it.aulab.aulabchronicle.services.CareerRequestService;
@@ -35,19 +39,27 @@ public class UserViewController {
     final private ArticleService articleService;
     final private CareerRequestRepository careerRequestRepository;
     final private CategoryService categoryService;
+    final private ArticleRepository articleRepository;
+    final private ModelMapper modelMapper;
 
     // Constructor injection
-    public UserViewController(UserServiceInterface service,ArticleService articleService, CareerRequestRepository careerRequestRepository, CategoryService categoryService) {
+    public UserViewController(UserServiceInterface service,ArticleService articleService, CareerRequestRepository careerRequestRepository, CategoryService categoryService,ArticleRepository articleRepository,ModelMapper modelMapper) {
         this.service = service;
         this.articleService = articleService;
         this.careerRequestRepository = careerRequestRepository;
         this.categoryService = categoryService;
+        this.articleRepository = articleRepository;
+        this.modelMapper = modelMapper;
     }
 
     //Rotta per la homepage
     @GetMapping("/")
     public String showHomePage(Model model) {
-        List<ArticleDto> articles = articleService.readAll();
+        List<ArticleDto> articles = new ArrayList<ArticleDto>();
+        for(Article article : articleRepository.findByIsAcceptedIsTrue()){
+            articles.add(modelMapper.map(article, ArticleDto.class));
+        }
+
         Collections.sort(articles,Comparator.comparing(ArticleDto::getPublishDate).reversed());
         List<ArticleDto> lastThreeArticles = articles.stream().limit(8).collect(Collectors.toList());
         model.addAttribute("articles", lastThreeArticles);
@@ -103,6 +115,14 @@ public class UserViewController {
         model.addAttribute("categories", categoryService.readAll());
 
         return "admin/dashboard";
+    }
+
+    @GetMapping("revisor/dashboard")
+    public String revisorDashboard(Model model){
+        model.addAttribute("title", "Revisor Dashboard");
+        model.addAttribute("articles", articleRepository.findByIsAcceptedIsFalse());
+
+        return "revisor/dashboard";
     }
 
 

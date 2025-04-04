@@ -1,10 +1,12 @@
 package it.aulab.aulabchronicle.controllers.view;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.aulab.aulabchronicle.dtos.ArticleDto;
 import it.aulab.aulabchronicle.models.Article;
+import it.aulab.aulabchronicle.repositories.ArticleRepository;
 import it.aulab.aulabchronicle.services.ArticleService;
 import it.aulab.aulabchronicle.services.CategoryService;
 import jakarta.validation.Valid;
@@ -27,14 +30,23 @@ import jakarta.validation.Valid;
 @RequestMapping("/articles")
 public class ArticleViewController {
 
+    //! questa parte del qualifier è da sistemare... devo richiamare l'interfaccia generics CrudRepository<>
     @Qualifier("CategoryService")
     final private CategoryService categoryService;
     @Qualifier("ArticleService")
     final private ArticleService articleService;
 
-    public ArticleViewController(CategoryService categoryService,ArticleService articleService) {
+    final private ModelMapper modelMapper;
+
+    final private ArticleRepository articleRepository;
+
+
+
+    public ArticleViewController(CategoryService categoryService,ArticleService articleService,ModelMapper modelMapper,ArticleRepository articleRepository) {
         this.categoryService = categoryService;
         this.articleService = articleService;
+        this.modelMapper = modelMapper;
+        this.articleRepository = articleRepository;
     }
 
     @GetMapping("/create")
@@ -57,14 +69,22 @@ public class ArticleViewController {
         redirectAttributes.addFlashAttribute("successMessage", "Articolo creato con successo!");
         return "redirect:/";
     }
+
+
     @GetMapping
     public String articleIndex(Model model){
         // DO: Implementare la logica per mostrare la lista degli articoli
     model.addAttribute("title","Indice Aricoli");
-    List<ArticleDto> articles = articleService.readAll();
+    List<ArticleDto> articles = new ArrayList<ArticleDto>();
+
+    for(Article article : articleRepository.findByIsAcceptedIsTrue()){
+        articles.add(modelMapper.map(article, ArticleDto.class));
+    }
 
     Collections.sort(articles,Comparator.comparing(ArticleDto::getPublishDate).reversed());
+
     model.addAttribute("articles", articles);
+
         return "article/index";
     }
 
@@ -73,5 +93,12 @@ public class ArticleViewController {
         model.addAttribute("title", "Article Detail");
         model.addAttribute("article", articleService.readById(id));
         return "article/show";
+    }
+
+    @GetMapping("revisor/detail/{id}")
+    public String revisorDetailArticle(@PathVariable Long id, Model model){
+        model.addAttribute("title", "Article Detail");
+        model.addAttribute("article", articleService.readById(id));
+        return "revisor/detail";
     }
 }
