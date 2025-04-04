@@ -97,8 +97,9 @@
                     </li>
                 </ul>
                 <!-- Search bar moved here -->
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <form class="d-flex" role="search" th:action="@{/articles/search}" method="get">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                        name="searchTerm" />
                     <button class="btn btn-outline-success" type="submit">
                         Search
                     </button>

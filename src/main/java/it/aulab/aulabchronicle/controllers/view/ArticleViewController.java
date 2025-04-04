@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -120,6 +122,20 @@ public class ArticleViewController {
 
 
         return "redirect:/revisor/dashboard";
-        
+    }
+
+    //! rotta per ricerche
+    @GetMapping("/search")
+    public String articleSearch(@Param("searchTerm") String searchTerm, Model model){
+        model.addAttribute("title", "tutti gli articoli trovati : " + searchTerm);
+
+        List<ArticleDto> articles = articleService.search(searchTerm);
+
+        List<ArticleDto> acceptedArticles = articles.stream().filter(a->Boolean.TRUE.equals(a.getIsAccepted())).collect(Collectors.toList());
+
+        model.addAttribute("articles", acceptedArticles);
+
+        return "article/index";
+
     }
 }

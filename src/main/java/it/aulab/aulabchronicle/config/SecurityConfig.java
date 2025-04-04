@@ -35,7 +35,7 @@ public SecurityConfig(CustomUserDetailsService customUserDetailsService,Password
     .authorizeHttpRequests(authorize -> authorize
     .requestMatchers("/admin/**","categories/admin/**","/revisor/dashboard","revisor/detail/{id}","/accept").hasRole("ADMIN")
     .requestMatchers("/revisor/dashboard","revisor/detail/{id}","/accept").hasRole("REVISOR")
-    .requestMatchers("/register/**", "/register", "/","/articles","/images/**","/articles/detail/**", "/search/**","/categories/search/**").permitAll()
+    .requestMatchers("/register/**", "/register", "/","/articles","/images/**","/articles/detail/**", "/search/**","/categories/search/**","/articles/search").permitAll()
         .anyRequest().authenticated()
     )
     .formLogin(login -> login
