@@ -34,7 +34,8 @@ public SecurityConfig(CustomUserDetailsService customUserDetailsService,Password
     .csrf(csrf -> csrf.disable())
     .authorizeHttpRequests(authorize -> authorize
     .requestMatchers("/admin/**","categories/admin/**","/revisor/dashboard","revisor/detail/{id}","/accept").hasRole("ADMIN")
-    .requestMatchers("/revisor/dashboard","revisor/detail/{id}","/accept").hasRole("REVISOR")
+    .requestMatchers("/revisor/dashboard","revisor/detail/{id}","/accept").hasAnyRole("REVISOR", "ADMIN")
+    .requestMatchers("/writer/dashboard","/articles/create","/articles/update{id}","articles/delete/{id}").hasAnyRole("REVISOR", "ADMIN")
     .requestMatchers("/register/**", "/register", "/","/articles","/images/**","/articles/detail/**", "/search/**","/categories/search/**","/articles/search").permitAll()
         .anyRequest().authenticated()
     )

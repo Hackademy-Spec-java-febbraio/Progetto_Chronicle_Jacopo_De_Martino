@@ -47,7 +47,9 @@
                         <ul class="dropdown-menu">
                             <!-- Menu visibile solo agli utenti anonimi -->
                             <li>
-                                <a class="dropdown-item" aria-current="page" th:href="@{/articles/create}">Crea
+                                <a class="dropdown-item" aria-current="page"
+                                    sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_WRITER')"
+                                    th:href="@{/articles/create}">Crea
                                     Articolo</a>
                             </li>
                             <li>
@@ -77,6 +79,11 @@
                                         <span th:text="${articleCount}"></span>
                                         <span class="visually-hidden">richieste in sospeso</span>
                                     </span>
+                                </a>
+                                <a class="dropdown-item position-relative" aria-current="page"
+                                    th:href="@{/writer/dashboard}"
+                                    sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_REVISOR')">
+                                    dashboard writer
                                 </a>
                             </li>
                             <li>

@@ -14,6 +14,10 @@
         </div>
     </div>
 
+    <div class="container min-vh-100 d-flex align-items-center justify-content-center"
+        th:unless=" ${articles.size()>0}">
+        <h4 class="text-center"> Nessun articolo disponiblie </h4>
+    </div>
     <div class="container" th:if="${articles.size()>0}">
         <div class="row justify-content-start align-items-center min-vh-100 mb-5 pb-4">
             <div class="col-md-4 col-lg-3 col-xl-3 col-12 mt-5 pt-4" th:each="article:${articles}">
@@ -46,14 +50,58 @@
                     </div>
                 </div>
             </div>
-            <div class="container" th:if="${articles.size() < 0}">
+            <div class="container" th:if="${articles == null or articles.empty}">
                 <div class="row justify-content-between align-items-center min-vh-100">
                     <p>Nessun articolo trovato</p>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="container min-vh-100 d-flex align-items-center"
+        th:if="${param.searchTerm != null and (articles == null or articles.empty)}">
+        <div class="row justify-content-center w-100">
+            <div class="col-md-8 text-center py-5">
+                <i class="fas fa-search fa-3x mb-4 text-muted"></i>
+                <h3 class="text-muted mb-3">Nessun risultato trovato</h3>
+
+                <p class="lead" th:if="${param.searchTerm != null}">
+                    La ricerca per "<strong th:text="${param.searchTerm}"></strong>" non ha prodotto risultati
+                </p>
+
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <!-- Bottone per riprovare/refresh -->
+                    <button class="btn btn-outline-primary" onclick="window.location.reload()">
+                        <i class="fas fa-sync-alt me-2"></i>Riprova
+                    </button>
+
+                    <!-- Bottone per tornare indietro -->
+                    <button class="btn btn-outline-secondary" onclick="history.back()">
+                        <i class="fas fa-arrow-left me-2"></i>Indietro
+                    </button>
+
+                    <!-- Bottone per tornare alla lista articoli -->
+                    <a th:href="@{/articles}" class="btn btn-primary">
+                        <i class="fas fa-list me-2"></i>Tutti gli articoli
+                    </a>
+                </div>
+
+                <div class="mt-4">
+                    <p class="text-muted">Suggerimenti:</p>
+                    <ul class="list-unstyled">
+                        <li>Prova termini di ricerca diversi</li>
+                        <li>Verifica l'ortografia</li>
+                        <li>Usa parole più generiche</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div th:insert="~{index :: footer}"></div>
+
 
     <!-- Include Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

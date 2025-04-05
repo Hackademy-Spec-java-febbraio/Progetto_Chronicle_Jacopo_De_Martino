@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+
+<head th:insert="~{index :: head}"></head>
+
+<body>
+    <div th:insert="~{index :: navbar}"></div>
+
+    <div class="row justify-content-center align-items-center ">
+        <div class="col-8">
+
+            <h2 th:text="${title}" class="text-center"></h2>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-8 col-lg-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center fw-bold">Modifica l'articolo</h5>
+
+                        <div class="card-text text-center fw-bold" th:if="${param.success}">
+                            <div class="alert alert-success text-success">
+                                Articolo modificato con successo
+                            </div>
+                        </div>
+                        <div class="card-text text-center fw-bold" th:if="${param.error}">
+                            <div class="alert alert-danger text-danger">
+                                Errore: modifica non riuscita
+                            </div>
+                        </div>
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <form method="post" th:action="@{/articles/update/{id}(id=${article.id})}"
+                            th:object="${article}" enctype="multipart/form-data">
+                            <li class="list-group-item">
+                                <!-- Titolo -->
+                                <label for="articleTitle" class="form-label mt-2 mb-1 ms-1">Titolo</label>
+                                <input type="text" class="form-control" id="articleTitle" name="articleTitle"
+                                    placeholder="title .." th:field="*{title}" th:value="${article.title}">
+                                <p th:if="${#fields.hasErrors('title')}" class="text-danger">
+                                    <span th:text="${#fields.errors('title')}"></span>
+                                </p>
+
+                                <!-- Sottotitolo -->
+                                <label for="articleSubtitle" class="form-label mt-2 mb-1 ms-1">Sottotitolo</label>
+                                <input type="text" class="form-control" id="articleSubtitle" name="articleSubtitle"
+                                    placeholder="subtitle .." th:field="*{subtitle}" th:value="${article.subtitle}">
+                                <p th:if="${#fields.hasErrors('subtitle')}" class="text-danger">
+                                    <span th:text="${#fields.errors('subtitle')}"></span>
+                                </p>
+
+                                <!-- Corpo dell'articolo -->
+                                <label for="body" class="form-label mt-2 mb-1 ms-1">Contenuto</label>
+                                <textarea class="form-control" id="body" placeholder="Scrivi il tuo testo..."
+                                    th:field="*{body}">${article.body}</textarea>
+                                <p th:errors="*{body}" class="text-danger" th:if="${#fields.hasErrors('body')}"></p>
+
+                                <label for="date" class="form-label mt-2 mb-1 ms-1">Data di pubblicazione</label>
+                                <input type="text" class="form-control" id="date" th:field="*{publishDate}"
+                                    th:value="${article.publishDate != null ? article.publishDate : #dates.format('yyyy-MM-dd', #dates.create('2025-01-01'))}">
+                                <p th:errors="*{publishDate}" class="text-danger"
+                                    th:if="${#fields.hasErrors('publishDate')}"></p>
+
+
+                                <!-- Categoria -->
+                                <label for="category" class="form-label mt-2 mb-1 ms-1">Categoria</label>
+                                <select id="category" th:field="*{category.id}" class="form-select">
+                                    <option th:each="category : ${categories}" th:value="${category.id}"
+                                        th:text="${category.name}"></option>
+                                </select>
+
+                                <!-- Immagine -->
+                                <div class="mb-3 d-flex flex-column" th:if="${article.image != null}">
+                                    <label for="image" class="form-label mt-2 mb-1 ms-1">Immagine dell'articolo</label>
+                                    <img th:src="${article.image.path}" id="image" alt="${article.image.path}">
+                                </div>
+
+                                <div class="mb-3 d-flex flex-column" th:unless="${article.image != null}">
+                                    <label for="image" class="form-label mt-2 mb-1 ms-1">Immagine non presente</label>
+                                </div>
+
+                                <label for="image" class="form-label">Immagine</label>
+                                <input type="file" name="file" id="image" class="form-control" />
+
+                                <!-- Bottone di invio -->
+                                <div class="button-container d-flex col-12 align-items-baseline">
+                                    <button type="submit" class="btn btn-primary mt-2 me-3">Modifica articolo</button>
+                                </div>
+                            </li>
+                        </form>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </ul>
+    <div class="card-body">
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div th:insert="~{index :: footer}"></div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz4fnFO9gyb6kFZ1q8A8PU5Y2/OhfXy2g9B6sVZ2zAmf5b3Wgp6vXjFPC4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

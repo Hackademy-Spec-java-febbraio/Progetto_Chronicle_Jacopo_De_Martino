@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+
+<head th:insert="~{index :: head}"></head>
+
+<body>
+    <div th:insert="~{index :: navbar}"></div>
+
+    <div class="row justify-content-center align-items-center ">
+        <div class="col-8">
+            <div th:if="${successMessage}" class="alert alert-success text-success my-2 mt-3">
+                <p th:text="${successMessage}" class="text-center"></p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center align-items-center ">
+        <div class="col-8">
+            <h2 th:text="${title}" class="text-center"></h2>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-start align-items-center min-vh-100 mb-5 pb-4">
+            <div class="col-12">
+                <table class="table table-striped table-responsive-lg">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Subtitle</th>
+                            <th>Category</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="article : ${articles}">
+                            <td th:text="${article.id}"></td>
+                            <td th:text="${article.title}"></td>
+                            <td th:text="${article.subtitle}"></td>
+                            <td th:if="${article.category}" th:text="${article.category.name}"></td>
+                            <td th:unless="${article.category}">Nessuna categoria</td>
+                            <td class="text-end">
+                                <!-- Pulsante Info -->
+                                <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-info btn-sm me-1"
+                                    title="Dettagli">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+
+                                <!-- Pulsante Update -->
+                                <a th:href="@{/articles/edit/{id}(id=${article.id})}"
+                                    class="btn btn-warning btn-sm me-1" title="Modifica">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <!-- Pulsante Delete -->
+                                <a th:href="@{/articles/delete/{id}(id=${article.id})}" class="btn btn-danger btn-sm"
+                                    title="Elimina"
+                                    onclick="return confirm('Sei sicuro di voler eliminare questa richiesta?');">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div th:insert="~{index :: footer}"></div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz4fnFO9gyb6kFZ1q8A8PU5Y2/OhfXy2g9B6sVZ2zAmf5b3Wgp6vXjFPC4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

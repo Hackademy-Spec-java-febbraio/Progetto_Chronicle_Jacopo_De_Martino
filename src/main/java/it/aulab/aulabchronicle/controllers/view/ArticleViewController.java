@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.aulab.aulabchronicle.dtos.ArticleDto;
+import it.aulab.aulabchronicle.dtos.CategoryDto;
 import it.aulab.aulabchronicle.models.Article;
 import it.aulab.aulabchronicle.repositories.ArticleRepository;
 import it.aulab.aulabchronicle.services.ArticleService;
@@ -97,6 +98,49 @@ public class ArticleViewController {
         model.addAttribute("article", articleService.readById(id));
         return "article/show";
     }
+
+    //! edit dashboard
+    @GetMapping("/edit/{id}")
+    public String showEditArticle(@PathVariable Long id, Model model){
+        ArticleDto article = articleService.readById(id);
+        // List<CategoryDto> categories = categoryService.readAll();
+        model.addAttribute("title", "Modifica articolo: " + article.getTitle());
+        model.addAttribute("article", article);
+        model.addAttribute("categories", categoryService.readAll());
+        return "writer/edit";
+    }
+    //! edit dashboard
+    @PostMapping("/update/{id}")
+    public String updateArticle(@PathVariable Long id,
+    @Valid @ModelAttribute("articles") Article article,
+    BindingResult result,
+    RedirectAttributes redirectAttributes,
+    Principal principal,
+    MultipartFile file,
+    Model model){
+        if(result.hasErrors()){
+            model.addAttribute("title", "Article update");
+            article.setImage(articleService.readById(id).getImage());
+            model.addAttribute("article", article);
+            model.addAttribute("categories",categoryService.readAll());
+            return "writer/edit";
+        }
+
+        articleService.update(id, article , file);
+        redirectAttributes.addFlashAttribute("successMessage", "Articolo aggiornato con successo!");
+        
+        
+        return "redirect:/articles";
+    }
+
+    @GetMapping("delete/{id}")
+    public String articleDelete(@PathVariable Long id, RedirectAttributes redirectAttributes){
+        articleService.delete(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Articolo eliminato con successo!");
+        return "redirect:/writer/dashboard";
+    }
+
+
 
     @GetMapping("revisor/detail/{id}")
     public String revisorDetailArticle(@PathVariable Long id, Model model){

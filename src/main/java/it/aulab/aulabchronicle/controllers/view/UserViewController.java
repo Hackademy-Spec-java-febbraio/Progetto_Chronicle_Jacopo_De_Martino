@@ -1,6 +1,7 @@
 package it.aulab.aulabchronicle.controllers.view;
 
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.aulab.aulabchronicle.dtos.ArticleDto;
+import it.aulab.aulabchronicle.dtos.CategoryDto;
 import it.aulab.aulabchronicle.dtos.UserDto;
 import it.aulab.aulabchronicle.models.Article;
 import it.aulab.aulabchronicle.models.User;
@@ -128,6 +130,33 @@ public class UserViewController {
 
         return "revisor/dashboard";
     }
+
+    @GetMapping("/writer/dashboard")
+    public String userDashboard(Model model, Principal principal){
+
+        model.addAttribute("title", "I tuoi articolo");
+
+        List<ArticleDto> userArticles = articleService.readAll().stream().filter(a->a.getUser().getEmail().equals(principal.getName()))
+        .toList();
+
+        model.addAttribute("articles", userArticles);
+        return"writer/dashboard";
+    }
+
+    // //! dettagli dashboard
+    // @GetMapping("detail/{id}")
+    // public String showDetailArticle(@PathVariable Long id,Model model){
+    //     ArticleDto article = articleService.readById(id);
+
+    //     model.addAttribute("title", "Dettaglio articolo: " + article.getTitle());
+    //     model.addAttribute("article", article);
+
+    //     return "article/detail";
+    // }
+
+    
+    // //! delete dashboard
+    // @GetMapping("delete/{id}")
 
 
 
